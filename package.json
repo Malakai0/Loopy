@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "@types/events": "^3.0.3",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.3.2"
+  },
+  "name": "loopy",
+  "version": "1.0.0",
+  "main": "out/index.js",
+  "scripts": {
+    "build": "tsc --build .",
+    "start": "node .",
+    "all": "tsc --build . && node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "events": "^3.3.0",
+    "ws": "^8.14.2"
+  }
+}
