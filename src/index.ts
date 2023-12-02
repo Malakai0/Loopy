@@ -1,10 +1,10 @@
-import { Client } from "./lib/client/client";
-import { Intents } from "./lib/client/resource/intents";
-import { Embed } from "./lib/client/resource/structs/Embed";
-import { Guild } from "./lib/client/resource/structs/Guild";
-import { Message } from "./lib/client/resource/structs/Message";
-import { EVT } from "./lib/client/resource/wire/constants";
-import { Ready } from "./lib/client/resource/wire/parsers/ready";
+import { Client } from "./lib/client";
+import { Intents } from "./lib/resource/intents";
+import { Embed } from "./lib/resource/structs/Embed";
+import { Guild } from "./lib/resource/structs/Guild";
+import { Message } from "./lib/resource/structs/Message";
+import { EVT } from "./lib/resource/wire/constants";
+import { Ready } from "./lib/resource/wire/parsers/ready";
 
 require("dotenv").config();
 

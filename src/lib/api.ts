@@ -1,4 +1,4 @@
-import { Endpoints } from "./client/resource/wire/endpoint";
+import { Endpoints } from "./resource/wire/endpoint";
 
 const BASE_URL: string = "https://discord.com/api/v10";
 
