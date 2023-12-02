@@ -6,6 +6,8 @@ import { Message } from "./lib/client/resource/structs/Message";
 import { EVT } from "./lib/client/resource/wire/constants";
 import { Ready } from "./lib/client/resource/wire/parsers/ready";
 
+require("dotenv").config();
+
 const client = new Client([
     Intents.GUILDS,
     Intents.GUILD_MEMBERS,
