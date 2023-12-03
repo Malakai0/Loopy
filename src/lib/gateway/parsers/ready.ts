@@ -1,9 +1,9 @@
-import { ApplicationPayload } from "../../payloads/Application";
-import { GuildPayload } from "../../payloads/Guild";
-import { UserPayload } from "../../payloads/User";
-import { Application } from "../../structs/Application";
-import { Guild, GuildCache } from "../../structs/Guild";
-import { User } from "../../structs/User";
+import { ApplicationPayload } from "../payloads/application";
+import { GuildPayload } from "../payloads/guild";
+import { UserPayload } from "../payloads/user";
+import { Application } from "../../structs/application";
+import { Guild, GuildCache } from "../../structs/guild";
+import { User } from "../../structs/user";
 
 type ReadyPayload = {
     v: number;
@@ -41,10 +41,11 @@ class Ready {
     async setup(): Promise<void> {
         await this.application.setup();
 
-        for (const guildPayload of this.payload.guilds) {
-            const guild = await GuildCache.get(guildPayload.id);
-            this.guilds.push(guild);
-        }
+        await Promise.all(
+            this.payload.guilds.map(async (guildPayload: GuildPayload) =>
+                this.guilds.push(await GuildCache.get(guildPayload.id))
+            )
+        ); // run all guilds in "parallel" (sorta, not really) and wait for them to finish
     }
 }
 

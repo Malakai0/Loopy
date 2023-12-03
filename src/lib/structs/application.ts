@@ -1,10 +1,10 @@
-import { api } from "../../client";
+import { api } from "../client";
 import { AsyncCache } from "../cache";
-import { ApplicationPayload } from "../payloads/Application";
-import { TeamPayload } from "../payloads/Team";
-import { Snowflake, wrapSnowflake } from "../snowflake";
-import { Guild, GuildCache } from "./Guild";
-import { User, UserCache } from "./User";
+import { ApplicationPayload } from "../gateway/payloads/application";
+import { TeamPayload } from "../gateway/payloads/team";
+import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
+import { Guild, GuildCache } from "./guild";
+import { User, UserCache } from "./user";
 
 class ApplicationCacheClass extends AsyncCache<Application> {
     async create(key: string): Promise<Application> {

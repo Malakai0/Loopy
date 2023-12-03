@@ -1,4 +1,4 @@
-import { api } from "../../client";
+import { api } from "../client";
 import { AsyncCache } from "../cache";
 import {
     ChannelPayload,
@@ -7,9 +7,9 @@ import {
     OverwritePayload,
     ThreadMemberPayload,
     ThreadMetadataPayload,
-} from "../payloads/Channel";
-import { DefaultReactionPayload } from "../payloads/Emoji";
-import { Snowflake, wrapSnowflake } from "../snowflake";
+} from "../gateway/payloads/channel";
+import { DefaultReactionPayload } from "../gateway/payloads/emoji";
+import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
 
 class ChannelCacheClass extends AsyncCache<Channel> {
     async create(key: string): Promise<Channel> {

@@ -1,6 +1,6 @@
 import { SnowflakePayload } from "../snowflake";
-import { EmojiPayload, StickerPayload } from "./Emoji";
-import { UserPayload } from "./User";
+import { EmojiPayload, StickerPayload } from "./emoji";
+import { UserPayload } from "./user";
 
 enum GuildMemberFlags {
     DidRejoin = 1 << 0,

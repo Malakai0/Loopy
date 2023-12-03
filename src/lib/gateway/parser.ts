@@ -1,4 +1,4 @@
-import { EVT } from "./constants";
+import { EVT } from "../constants";
 import {
     messageCreate,
     messageUpdate,

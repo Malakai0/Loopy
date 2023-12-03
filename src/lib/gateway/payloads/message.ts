@@ -1,10 +1,10 @@
 import { SnowflakePayload } from "../snowflake";
-import { AttachmentPayload } from "./Attachment";
-import { ChannelMentionPayload, ChannelPayload } from "./Channel";
-import { EmbedPayload } from "./Embed";
-import { EmojiPayload, StickerFormatType, StickerPayload } from "./Emoji";
-import { GuildMemberPayload, RolePayload } from "./Guild";
-import { UserPayload } from "./User";
+import { AttachmentPayload } from "./attachment";
+import { ChannelMentionPayload, ChannelPayload } from "./channel";
+import { EmbedPayload } from "./embed";
+import { EmojiPayload, StickerFormatType, StickerPayload } from "./emoji";
+import { GuildMemberPayload, RolePayload } from "./guild";
+import { UserPayload } from "./user";
 
 enum MessageType {
     Default = 0,

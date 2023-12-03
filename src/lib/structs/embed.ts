@@ -7,7 +7,7 @@ import {
     EmbedProviderPayload,
     EmbedType,
     EmbedVideoPayload,
-} from "../payloads/Embed";
+} from "../gateway/payloads/embed";
 
 class Embed {
     title?: string;

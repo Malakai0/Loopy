@@ -1,6 +1,6 @@
 import { SnowflakePayload } from "../snowflake";
-import { DefaultReactionPayload } from "./Emoji";
-import { GuildMemberPayload } from "./Guild";
+import { DefaultReactionPayload } from "./emoji";
+import { GuildMemberPayload } from "./guild";
 
 enum ChannelType {
     GuildText = 0,

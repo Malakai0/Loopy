@@ -1,5 +1,5 @@
-import { GuildPayload } from "../../payloads/Guild";
-import { Guild, GuildCache } from "../../structs/Guild";
+import { GuildPayload } from "../payloads/guild";
+import { Guild, GuildCache } from "../../structs/guild";
 
 async function guildCreate(payload: GuildPayload): Promise<Guild> {
     if (payload.unavailable) {

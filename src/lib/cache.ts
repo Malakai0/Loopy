@@ -1,4 +1,4 @@
-import { Snowflake } from "./snowflake";
+import { Snowflake } from "./gateway/snowflake";
 
 const MAX_CACHE_SIZE: number = 1000;
 
@@ -43,7 +43,6 @@ export class AsyncCache<T extends Cacheable> {
             return cached;
         }
 
-        console.log("Cache miss");
         return await this.create(id);
     }
 

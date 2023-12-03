@@ -1,10 +1,6 @@
-import { Client } from "./lib/client";
-import { Intents } from "./lib/resource/intents";
-import { Embed } from "./lib/resource/structs/Embed";
-import { Guild } from "./lib/resource/structs/Guild";
-import { Message } from "./lib/resource/structs/Message";
-import { EVT } from "./lib/resource/wire/constants";
-import { Ready } from "./lib/resource/wire/parsers/ready";
+import { Client, EVT, Intents } from "@lib/client";
+import { Ready } from "@lib/gateway";
+import { Embed, Guild, Message } from "@lib/structs";
 
 require("dotenv").config();
 
@@ -25,10 +21,7 @@ client.bind(EVT.MESSAGE_CREATE, async (message: Message) => {
     if (message.author.bot) return;
 
     if (message.content.includes("ping")) {
-        const embed = new Embed()
-            .set_title("Pong!")
-            .set_description("This is an embed!");
-
+        const embed = new Embed().set_title("yes").set_description("pong");
         await message.reply(embed);
     }
 });

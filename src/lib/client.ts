@@ -1,8 +1,8 @@
 import { EventEmitter } from "ws";
-import { Socket } from "./socket";
-import { EVT, OpCode } from "./resource/wire/constants";
-import { API } from "./api";
-import { Parsers } from "./resource/wire/parser";
+import { Socket } from "./gateway/socket";
+import { EVT, OpCode } from "./constants";
+import { API } from "./api/api";
+import { Parsers } from "./gateway/parser";
 
 const GATEWAY: string = "wss://gateway.discord.gg/?v=10&encoding=json";
 

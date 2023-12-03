@@ -1,7 +1,7 @@
-import { api } from "../../client";
+import { api } from "../client";
 import { AsyncCache } from "../cache";
-import { UserPayload } from "../payloads/User";
-import { Snowflake } from "../snowflake";
+import { UserPayload } from "../gateway/payloads/user";
+import { Snowflake } from "../gateway/snowflake";
 
 class UserCacheClass extends AsyncCache<User> {
     async create(key: string): Promise<User> {

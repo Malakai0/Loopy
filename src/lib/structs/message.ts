@@ -1,15 +1,15 @@
-import { api } from "../../client";
-import { Snowflake, wrapSnowflake } from "../snowflake";
-import { User } from "./User";
-import { Channel, ChannelCache } from "./Channel";
-import { Embed } from "./Embed";
-import { AttachmentPayload } from "../payloads/Attachment";
+import { api } from "../client";
+import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
+import { User } from "./user";
+import { Channel, ChannelCache } from "./channel";
+import { Embed } from "./embed";
+import { AttachmentPayload } from "../gateway/payloads/attachment";
 import {
     MessageApplicationPayload,
     MessagePayload,
     MessageType,
-} from "../payloads/Message";
-import { ChannelMentionPayload } from "../payloads/Channel";
+} from "../gateway/payloads/message";
+import { ChannelMentionPayload } from "../gateway/payloads/channel";
 
 export class Message {
     id: Snowflake;

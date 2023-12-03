@@ -1,6 +1,6 @@
-import { MessagePayload } from "../../payloads/Message";
-import { Snowflake } from "../../snowflake";
-import { Message } from "../../structs/Message";
+import { MessagePayload } from "../payloads/message";
+import { Snowflake } from "../snowflake";
+import { Message } from "../../structs/message";
 
 async function messageCreate(data: MessagePayload): Promise<Message> {
     const message = new Message(data);

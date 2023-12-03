@@ -1,6 +1,6 @@
-import { api } from "../../client";
+import { api } from "../client";
 import { AsyncCache } from "../cache";
-import { EmojiPayload, StickerPayload } from "../payloads/Emoji";
+import { EmojiPayload, StickerPayload } from "../gateway/payloads/emoji";
 import {
     ExplicitContentFilterLevel,
     GuildFeatures,
@@ -10,8 +10,8 @@ import {
     PremiumTier,
     RolePayload,
     VerificationLevel,
-} from "../payloads/Guild";
-import { Snowflake, wrapSnowflake } from "../snowflake";
+} from "../gateway/payloads/guild";
+import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
 
 class GuildCacheClass extends AsyncCache<Guild> {
     async create(key: string): Promise<Guild> {

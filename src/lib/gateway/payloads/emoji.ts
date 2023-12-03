@@ -1,5 +1,5 @@
 import { SnowflakePayload } from "../snowflake";
-import { UserPayload } from "./User";
+import { UserPayload } from "./user";
 
 enum StickerType {
     Standard = 1,

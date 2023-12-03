@@ -1,7 +1,7 @@
 import { SnowflakePayload } from "../snowflake";
-import { GuildPayload } from "./Guild";
-import { TeamPayload } from "./Team";
-import { UserPayload } from "./User";
+import { GuildPayload } from "./guild";
+import { TeamPayload } from "./team";
+import { UserPayload } from "./user";
 
 enum ApplicationFlags {
     ApplicationAutoModerationRuleCreateBadge = 1 << 6,
