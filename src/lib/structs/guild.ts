@@ -85,3 +85,10 @@ export class Guild {
 
     async setup(): Promise<void> {}
 }
+
+export function getRoleFromId(
+    guild: Guild,
+    id: Snowflake | string
+): RolePayload {
+    return guild.roles.find((role) => role.id === id.toString())!;
+}

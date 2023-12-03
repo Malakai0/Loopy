@@ -1,8 +1,11 @@
+require("dotenv").config();
+require("module-alias/register");
+
 import { Client, EVT, Intents } from "@lib/client";
 import { Ready } from "@lib/gateway";
-import { Embed, Guild, Message } from "@lib/structs";
-
-require("dotenv").config();
+import { Guild, Message } from "@lib/structs";
+import { CommandHandler } from "./commandHandler";
+import { Commands } from "./commands/index";
 
 const client = new Client([
     Intents.GUILDS,
@@ -10,6 +13,9 @@ const client = new Client([
     Intents.GUILD_MESSAGES,
     Intents.MESSAGE_CONTENT,
 ]);
+
+const commandHandler = new CommandHandler();
+commandHandler.registerCommands(Commands);
 
 client.bind(EVT.READY, (data: Ready) => {
     console.log(
@@ -20,10 +26,7 @@ client.bind(EVT.READY, (data: Ready) => {
 client.bind(EVT.MESSAGE_CREATE, async (message: Message) => {
     if (message.author.bot) return;
 
-    if (message.content.includes("ping")) {
-        const embed = new Embed().set_title("yes").set_description("pong");
-        await message.reply(embed);
-    }
+    await commandHandler.handle(message);
 });
 
 client.bind(EVT.GUILD_CREATE, async (guild: Guild) => {

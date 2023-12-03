@@ -28,6 +28,8 @@ export class API {
         });
 
         if (response.status !== 200) {
+            console.error(body);
+            console.error(response);
             throw new Error("Failed to fetch.");
         }
 
@@ -51,7 +53,7 @@ export class API {
         if (response.status !== 200) {
             console.error(body);
             console.error(response);
-            throw new Error("Failed to fetch.");
+            throw new Error("Failed to post.");
         }
 
         return response.json();

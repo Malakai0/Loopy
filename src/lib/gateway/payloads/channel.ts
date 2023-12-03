@@ -70,7 +70,7 @@ type ForumTagPayload = {
 type ChannelPayload = {
     id: SnowflakePayload;
     type: ChannelType;
-    guild_id?: SnowflakePayload;
+    guild_id: SnowflakePayload;
     position?: number;
     permission_overwrites?: OverwritePayload[];
     name?: string;

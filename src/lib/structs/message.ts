@@ -10,6 +10,7 @@ import {
     MessageType,
 } from "../gateway/payloads/message";
 import { ChannelMentionPayload } from "../gateway/payloads/channel";
+import { Guild } from "./guild";
 
 export class Message {
     id: Snowflake;
@@ -36,6 +37,7 @@ export class Message {
     referenced_message?: Message;
     interaction: any;
     channel?: Channel;
+    guild?: Guild;
     private _mention_channels_raw?: ChannelMentionPayload[];
 
     constructor(payload: MessagePayload) {
@@ -75,6 +77,7 @@ export class Message {
 
     async setup(): Promise<void> {
         this.channel = await ChannelCache.get(this.channel_id);
+        this.guild = this.channel?.guild;
         if (this._mention_channels_raw) {
             this.mention_channels = await Promise.all(
                 this._mention_channels_raw.map((c) => ChannelCache.get(c.id))

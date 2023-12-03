@@ -4,6 +4,8 @@ import { UserPayload } from "../payloads/user";
 import { Application } from "../../structs/application";
 import { Guild, GuildCache } from "../../structs/guild";
 import { User } from "../../structs/user";
+import { Client, socket } from "@lib/client";
+import { ParserContext } from "../parser";
 
 type ReadyPayload = {
     v: number;
@@ -25,7 +27,7 @@ class Ready {
     application: Application;
     private payload: ReadyPayload;
 
-    constructor(payload: ReadyPayload) {
+    constructor(payload: ReadyPayload, client: Client) {
         this.payload = payload;
 
         this.v = payload.v;
@@ -34,6 +36,9 @@ class Ready {
         this.resume_gateway_url = payload.resume_gateway_url;
         this.shard = payload.shard;
         this.application = new Application(payload.application);
+
+        socket.set_gateway(this.resume_gateway_url);
+        client.set_session_id(this.session_id);
 
         this.guilds = [];
     }
@@ -49,8 +54,11 @@ class Ready {
     }
 }
 
-async function ready(payload: ReadyPayload): Promise<Ready> {
-    const ready = new Ready(payload);
+async function ready(
+    payload: ReadyPayload,
+    context: ParserContext
+): Promise<Ready> {
+    const ready = new Ready(payload, context.client);
     await ready.setup();
 
     return ready;

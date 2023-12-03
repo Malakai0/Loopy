@@ -7,8 +7,19 @@ import {
 } from "./parsers/message";
 import { guildCreate, guildUpdate, guildDelete } from "./parsers/guild";
 import { ready } from "./parsers/ready";
+import { Client } from "../client";
+import { API } from "../api/api";
+import { Socket } from "./socket";
 
-export const Parsers: { [key: string]: (data: any) => any } = {
+export type ParserContext = {
+    client: Client;
+    api: API;
+    socket: Socket;
+};
+
+export const Parsers: {
+    [key: string]: (data: any, context: ParserContext) => any;
+} = {
     [EVT.MESSAGE_CREATE]: messageCreate,
     [EVT.MESSAGE_UPDATE]: messageUpdate,
     [EVT.MESSAGE_DELETE]: messageDelete,

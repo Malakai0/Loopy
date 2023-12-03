@@ -10,15 +10,26 @@ interface Payload<T> {
 
 class Socket {
     private emitter: EventEmitter;
-    private gateway: string;
+    private gateway?: string;
     private ws: WebSocket | undefined;
 
-    constructor(gateway: string) {
+    constructor(gateway?: string) {
         this.emitter = new EventEmitter();
+
+        if (gateway) {
+            this.gateway = gateway;
+        }
+    }
+
+    set_gateway(gateway: string): void {
         this.gateway = gateway;
     }
 
     connect(): void {
+        if (!this.gateway) {
+            throw new Error("Gateway not set.");
+        }
+
         this.ws = new WebSocket(this.gateway);
         this.ws.on("message", (data: any) => {
             const payload: Payload<any> = JSON.parse(data.toString());

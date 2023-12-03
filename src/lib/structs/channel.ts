@@ -10,6 +10,7 @@ import {
 } from "../gateway/payloads/channel";
 import { DefaultReactionPayload } from "../gateway/payloads/emoji";
 import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
+import { Guild, GuildCache } from "./guild";
 
 class ChannelCacheClass extends AsyncCache<Channel> {
     async create(key: string): Promise<Channel> {
@@ -29,7 +30,8 @@ export const ChannelCache = new ChannelCacheClass();
 export class Channel {
     id: Snowflake;
     type: ChannelType;
-    guild_id?: Snowflake;
+    guild_id: Snowflake;
+    guild?: Guild;
     position?: number;
     permission_overwrites?: OverwritePayload[];
     name?: string;
@@ -94,7 +96,7 @@ export class Channel {
         this.default_sort_order = payload.default_sort_order;
         this.default_forum_layout = payload.default_forum_layout;
 
-        this.guild_id = wrapSnowflake(payload.guild_id);
+        this.guild_id = new Snowflake(payload.guild_id);
         this.last_message_id = wrapSnowflake(payload.last_message_id);
         this.owner_id = wrapSnowflake(payload.owner_id);
         this.application_id = wrapSnowflake(payload.application_id);
@@ -107,5 +109,7 @@ export class Channel {
         }
     }
 
-    async setup(): Promise<void> {}
+    async setup(): Promise<void> {
+        this.guild = await GuildCache.get(this.guild_id);
+    }
 }

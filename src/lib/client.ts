@@ -7,44 +7,48 @@ import { Parsers } from "./gateway/parser";
 const GATEWAY: string = "wss://gateway.discord.gg/?v=10&encoding=json";
 
 export const api = new API();
+export const socket = new Socket(GATEWAY);
 
 export class Client {
-    private socket: Socket;
     private intents: number;
     private sequence: number | undefined;
     private auth?: string;
     private onDispatch: EventEmitter;
+    private session_id?: string;
 
     constructor(intents: number[]) {
-        this.socket = new Socket(GATEWAY);
         this.intents = intents.reduce((acc, cur) => acc | cur, 0);
         this.sequence = undefined;
         this.onDispatch = new EventEmitter();
 
-        this.socket.listen(OpCode.Hello, (payload: any) => {
+        socket.listen(OpCode.Hello, (payload: any) => {
             console.log("Received HELLO");
             this.identify();
             this.heartbeatInterval(payload.d.heartbeat_interval);
         });
 
-        this.socket.listen(OpCode.Dispatch, (payload: any) => {
+        socket.listen(OpCode.Dispatch, (payload: any) => {
             this.sequence = payload.s;
             this.dispatch(payload.t, payload.d);
         });
 
-        this.socket.listen(OpCode.Heartbeat, () => {
+        socket.listen(OpCode.Heartbeat, () => {
             this.heartbeat();
         });
 
-        this.socket.listen(OpCode.Reconnect, () => {
+        socket.listen(OpCode.Reconnect, () => {
             this.resume();
         });
+    }
+
+    public set_session_id(session_id: string): void {
+        this.session_id = session_id;
     }
 
     public login(auth: string): void {
         this.auth = auth;
         api.login(auth);
-        this.socket.connect();
+        socket.connect();
     }
 
     public bind<T>(evt: EVT, callback: (data: T) => void): void {
@@ -55,14 +59,20 @@ export class Client {
             return;
         }
 
+        const parserContext = {
+            api,
+            socket,
+            client: this,
+        };
+
         this.onDispatch.on(evt, async (data: any) => {
-            callback(await parser(data));
+            callback(await parser(data, parserContext));
         });
     }
 
     private heartbeat(): void {
         console.log("Sending HEARTBEAT");
-        this.socket.send({
+        socket.send({
             op: OpCode.Heartbeat,
             d: this.sequence,
         });
@@ -70,7 +80,7 @@ export class Client {
 
     private identify(): void {
         console.log("Sending IDENTIFY");
-        this.socket.send({
+        socket.send({
             op: OpCode.Identify,
             d: {
                 token: this.auth,
@@ -90,9 +100,14 @@ export class Client {
 
     private resume(): void {
         console.log("Sending RESUME");
-        this.socket.send({
+        socket.connect();
+        socket.send({
             op: OpCode.Resume,
-            d: null,
+            d: {
+                token: this.auth,
+                session_id: this.session_id,
+                seq: this.sequence,
+            },
         });
     }
 
