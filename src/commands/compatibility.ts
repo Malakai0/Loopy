@@ -1,4 +1,4 @@
-import { Argument, ArgumentValue, Command } from "../commandHandler";
+import { ArgumentValue, Command } from "../commandHandler";
 import { Message, User } from "@lib/structs";
 
 export const Compatibility = new Command(
