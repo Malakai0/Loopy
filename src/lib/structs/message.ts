@@ -1,5 +1,4 @@
 import { api } from "../client";
-import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
 import { User } from "./user";
 import { Channel, ChannelCache } from "./channel";
 import { Embed } from "./embed";
@@ -13,8 +12,8 @@ import { ChannelMentionPayload } from "../gateway/payloads/channel";
 import { Guild } from "./guild";
 
 export class Message {
-    id: Snowflake;
-    channel_id: Snowflake;
+    id: string;
+    channel_id: string;
     author: User;
     content: string;
     timestamp: string;
@@ -28,11 +27,11 @@ export class Message {
     embeds: Embed[];
     nonce: string | number;
     pinned: boolean;
-    webhook_id?: Snowflake;
+    webhook_id?: string;
     type: MessageType;
     activity: any;
     application?: MessageApplicationPayload;
-    application_id?: Snowflake;
+    application_id?: string;
     flags: number;
     referenced_message?: Message;
     interaction: any;
@@ -44,8 +43,8 @@ export class Message {
         if (!payload.channel_id) {
             throw new Error("Message#constructor: Thread not linked");
         }
-        this.id = new Snowflake(payload.id);
-        this.channel_id = new Snowflake(payload.channel_id);
+        this.id = payload.id;
+        this.channel_id = payload.channel_id;
         this.author = new User(payload.author);
         this.content = payload.content;
         this.timestamp = payload.timestamp;
@@ -60,7 +59,7 @@ export class Message {
         this.embeds = payload.embeds.map((e: any) => new Embed(e));
         this.nonce = payload.nonce!;
         this.pinned = payload.pinned;
-        this.webhook_id = wrapSnowflake(payload.webhook_id);
+        this.webhook_id = payload.webhook_id;
         this.type = payload.type;
         this.activity = payload.activity;
         this.flags = payload.flags!;
@@ -70,7 +69,7 @@ export class Message {
         this.interaction = payload.interaction;
 
         if (payload.application_id && payload.application) {
-            this.application_id = new Snowflake(payload.application_id);
+            this.application_id = payload.application_id;
             this.application = payload.application;
         }
     }

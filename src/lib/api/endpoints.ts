@@ -1,4 +1,5 @@
 enum Endpoints {
+    GET_CURRENT_APPLICATION = "/applications/@me",
     GET_USER = "/users/{0}",
     CREATE_MESSAGE = "/channels/{0}/messages",
     EDIT_MESSAGE = "/channels/{0}/messages/{1}",

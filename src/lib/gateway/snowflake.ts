@@ -1,26 +1,28 @@
 const DISCORD_EPOCH: bigint = 1420070400000n;
 
 export class Snowflake {
-    private id: bigint;
+    private id_int: bigint;
+    id: string;
 
     constructor(id: string) {
-        this.id = BigInt(id);
+        this.id = id;
+        this.id_int = BigInt(id);
     }
 
     get timestamp(): number {
-        return Number((this.id >> 22n) + DISCORD_EPOCH);
+        return Number((this.id_int >> 22n) + DISCORD_EPOCH);
     }
 
     get workerID(): number {
-        return Number((this.id & 0x3e0000n) >> 17n);
+        return Number((this.id_int & 0x3e0000n) >> 17n);
     }
 
     get processID(): number {
-        return Number((this.id & 0x1f000n) >> 12n);
+        return Number((this.id_int & 0x1f000n) >> 12n);
     }
 
     get increment(): number {
-        return Number(this.id & 0xfffn);
+        return Number(this.id_int & 0xfffn);
     }
 
     get date(): Date {
@@ -28,7 +30,7 @@ export class Snowflake {
     }
 
     toString(): string {
-        return this.id.toString();
+        return this.id;
     }
 }
 

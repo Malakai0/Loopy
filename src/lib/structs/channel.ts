@@ -9,7 +9,6 @@ import {
     ThreadMetadataPayload,
 } from "../gateway/payloads/channel";
 import { DefaultReactionPayload } from "../gateway/payloads/emoji";
-import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
 import { Guild, GuildCache } from "./guild";
 
 class ChannelCacheClass extends AsyncCache<Channel> {
@@ -28,24 +27,24 @@ class ChannelCacheClass extends AsyncCache<Channel> {
 export const ChannelCache = new ChannelCacheClass();
 
 export class Channel {
-    id: Snowflake;
+    id: string;
     type: ChannelType;
-    guild_id: Snowflake;
+    guild_id: string;
     guild?: Guild;
     position?: number;
     permission_overwrites?: OverwritePayload[];
     name?: string;
     topic?: string;
     nsfw?: boolean;
-    last_message_id?: Snowflake;
+    last_message_id?: string;
     bitrate?: number;
     user_limit?: number;
     rate_limit_per_user?: number;
     recipients?: any[];
     icon?: string;
-    owner_id?: Snowflake;
-    application_id?: Snowflake;
-    parent_id?: Snowflake;
+    owner_id?: string;
+    application_id?: string;
+    parent_id?: string;
     last_pin_timestamp?: string;
     rtc_region?: string;
     video_quality_mode?: number;
@@ -58,14 +57,14 @@ export class Channel {
     flags?: number;
     total_message_sent?: number;
     available_tags?: ForumTagPayload[];
-    applied_tags?: Snowflake[];
+    applied_tags?: string[];
     default_reaction_emoji?: DefaultReactionPayload;
     default_thread_rate_limit_per_user?: number;
     default_sort_order?: number;
     default_forum_layout?: number;
 
     constructor(payload: ChannelPayload) {
-        this.id = new Snowflake(payload.id);
+        this.id = payload.id;
         this.type = payload.type;
         this.position = payload.position;
         this.permission_overwrites = payload.permission_overwrites;
@@ -96,16 +95,14 @@ export class Channel {
         this.default_sort_order = payload.default_sort_order;
         this.default_forum_layout = payload.default_forum_layout;
 
-        this.guild_id = new Snowflake(payload.guild_id);
-        this.last_message_id = wrapSnowflake(payload.last_message_id);
-        this.owner_id = wrapSnowflake(payload.owner_id);
-        this.application_id = wrapSnowflake(payload.application_id);
-        this.parent_id = wrapSnowflake(payload.parent_id);
+        this.guild_id = payload.guild_id;
+        this.last_message_id = payload.last_message_id;
+        this.owner_id = payload.owner_id;
+        this.application_id = payload.application_id;
+        this.parent_id = payload.parent_id;
 
         if (payload.applied_tags) {
-            this.applied_tags = payload.applied_tags.map(
-                (tag) => new Snowflake(tag)
-            );
+            this.applied_tags = payload.applied_tags;
         }
     }
 

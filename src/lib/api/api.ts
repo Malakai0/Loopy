@@ -1,3 +1,13 @@
+import {
+    ApplicationPayload,
+    ChannelPayload,
+    EmojiPayload,
+    GuildMemberPayload,
+    GuildPayload,
+    MessagePayload,
+    RolePayload,
+    UserPayload,
+} from "../gateway";
 import { Endpoints } from "./endpoints";
 
 const BASE_URL: string = "https://discord.com/api/v10";
@@ -59,7 +69,10 @@ export class API {
         return response.json();
     }
 
-    public async createMessage(channelId: string, body: any): Promise<any> {
+    public async createMessage(
+        channelId: string,
+        body: any
+    ): Promise<MessagePayload> {
         const endpoint: string = format(Endpoints.CREATE_MESSAGE, channelId);
         return await this.post(endpoint, body);
     }
@@ -68,7 +81,7 @@ export class API {
         channelId: string,
         messageId: string,
         body: any
-    ): Promise<any> {
+    ): Promise<MessagePayload> {
         const endpoint: string = format(
             Endpoints.EDIT_MESSAGE,
             channelId,
@@ -80,7 +93,7 @@ export class API {
     public async deleteMessage(
         channelId: string,
         messageId: string
-    ): Promise<any> {
+    ): Promise<void> {
         const endpoint: string = format(
             Endpoints.DELETE_MESSAGE,
             channelId,
@@ -89,32 +102,35 @@ export class API {
         return await this.request(endpoint);
     }
 
-    public async getChannel(channelId: string): Promise<any> {
+    public async getChannel(channelId: string): Promise<ChannelPayload> {
         const endpoint: string = format(Endpoints.GET_CHANNEL, channelId);
         return await this.request(endpoint);
     }
 
-    public async getGuild(guildId: string): Promise<any> {
+    public async getGuild(guildId: string): Promise<GuildPayload> {
         const endpoint: string = format(Endpoints.GET_GUILD, guildId);
         return await this.request(endpoint);
     }
 
-    public async getGuildChannels(guildId: string): Promise<any> {
+    public async getGuildChannels(guildId: string): Promise<ChannelPayload[]> {
         const endpoint: string = format(Endpoints.GET_GUILD_CHANNELS, guildId);
         return await this.request(endpoint);
     }
 
-    public async getGuildEmojis(guildId: string): Promise<any> {
+    public async getGuildEmojis(guildId: string): Promise<EmojiPayload[]> {
         const endpoint: string = format(Endpoints.GET_GUILD_EMOJIS, guildId);
         return await this.request(endpoint);
     }
 
-    public async getGuildRoles(guildId: string): Promise<any> {
+    public async getGuildRoles(guildId: string): Promise<RolePayload[]> {
         const endpoint: string = format(Endpoints.GET_GUILD_ROLES, guildId);
         return await this.request(endpoint);
     }
 
-    public async getGuildMember(guildId: string, userId: string): Promise<any> {
+    public async getGuildMember(
+        guildId: string,
+        userId: string
+    ): Promise<GuildMemberPayload> {
         const endpoint: string = format(
             Endpoints.GET_GUILD_MEMBER,
             guildId,
@@ -123,8 +139,13 @@ export class API {
         return await this.request(endpoint);
     }
 
-    public async getUser(userId: string): Promise<any> {
+    public async getUser(userId: string): Promise<UserPayload> {
         const endpoint: string = format(Endpoints.GET_USER, userId);
+        return await this.request(endpoint);
+    }
+
+    public async getCurrentApplication(): Promise<ApplicationPayload> {
+        const endpoint: string = Endpoints.GET_CURRENT_APPLICATION;
         return await this.request(endpoint);
     }
 }

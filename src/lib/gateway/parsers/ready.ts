@@ -4,7 +4,7 @@ import { UserPayload } from "../payloads/user";
 import { Application } from "../../structs/application";
 import { Guild, GuildCache } from "../../structs/guild";
 import { User } from "../../structs/user";
-import { Client, socket } from "@lib/client";
+import { Client, api, socket } from "@lib/client";
 import { ParserContext } from "../parser";
 
 type ReadyPayload = {
@@ -26,9 +26,11 @@ class Ready {
     shard: [number, number];
     application: Application;
     private payload: ReadyPayload;
+    private client: Client;
 
     constructor(payload: ReadyPayload, client: Client) {
         this.payload = payload;
+        this.client = client;
 
         this.v = payload.v;
         this.user = new User(payload.user);
@@ -44,7 +46,14 @@ class Ready {
     }
 
     async setup(): Promise<void> {
-        await this.application.setup();
+        await api
+            .getCurrentApplication()
+            .then(async (app: ApplicationPayload) => {
+                this.application = new Application(app);
+                await this.application.setup();
+            });
+
+        this.client.set_application(this.application);
 
         await Promise.all(
             this.payload.guilds.map(async (guildPayload: GuildPayload) =>

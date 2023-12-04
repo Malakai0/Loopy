@@ -11,7 +11,6 @@ import {
     RolePayload,
     VerificationLevel,
 } from "../gateway/payloads/guild";
-import { Snowflake, wrapSnowflake } from "../gateway/snowflake";
 
 class GuildCacheClass extends AsyncCache<Guild> {
     async create(key: string): Promise<Guild> {
@@ -29,11 +28,11 @@ class GuildCacheClass extends AsyncCache<Guild> {
 export const GuildCache = new GuildCacheClass();
 
 export class Guild {
-    id: Snowflake;
+    id: string;
     name: string;
     icon: string;
     owner?: boolean;
-    owner_id: Snowflake;
+    owner_id: string;
     permissions?: string;
     region?: string;
     verification_level: VerificationLevel;
@@ -42,7 +41,7 @@ export class Guild {
     emojis: EmojiPayload[];
     features: GuildFeatures[];
     mfa_level: MFALevel;
-    application_id?: Snowflake;
+    application_id?: string;
     max_presences?: number;
     max_members: number;
     vanity_url_code: string;
@@ -55,11 +54,11 @@ export class Guild {
     stickers: StickerPayload[];
 
     constructor(payload: GuildPayload) {
-        this.id = new Snowflake(payload.id);
+        this.id = payload.id;
         this.name = payload.name;
         this.icon = payload.icon;
         this.owner = payload.owner;
-        this.owner_id = new Snowflake(payload.owner_id);
+        this.owner_id = payload.owner_id;
         this.permissions = payload.permissions;
         this.region = payload.region;
         this.verification_level = payload.verification_level;
@@ -68,7 +67,7 @@ export class Guild {
         this.emojis = payload.emojis;
         this.features = payload.features;
         this.mfa_level = payload.mfa_level;
-        this.application_id = wrapSnowflake(payload.application_id);
+        this.application_id = payload.application_id;
         this.max_presences = payload.max_presences;
         this.max_members = payload.max_members;
         this.vanity_url_code = payload.vanity_url_code!;
@@ -88,7 +87,7 @@ export class Guild {
 
 export function getRoleFromId(
     guild: Guild,
-    id: Snowflake | string
+    id: string
 ): RolePayload {
     return guild.roles.find((role) => role.id === id.toString())!;
 }

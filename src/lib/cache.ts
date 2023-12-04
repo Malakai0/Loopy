@@ -1,5 +1,3 @@
-import { Snowflake } from "./gateway/snowflake";
-
 const MAX_CACHE_SIZE: number = 1000;
 
 const hash = (key: string): number => {
@@ -10,17 +8,15 @@ const hash = (key: string): number => {
 };
 
 type Cacheable = {
-    id: Snowflake | string;
+    id: string;
 };
-type AcceptableInput = Cacheable | Snowflake | string;
+type AcceptableInput = Cacheable | string;
 
 function getSnowflake(key: AcceptableInput): string {
     if (typeof key === "string") {
         return key;
-    } else if (key instanceof Snowflake) {
-        return key.toString();
     } else {
-        return getSnowflake(key.id);
+        return key.id;
     }
 }
 

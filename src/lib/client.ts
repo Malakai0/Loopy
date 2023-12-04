@@ -3,6 +3,7 @@ import { Socket } from "./gateway/socket";
 import { EVT, OpCode } from "./constants";
 import { API } from "./api/api";
 import { Parsers } from "./gateway/parser";
+import { Application } from "./structs";
 
 const GATEWAY: string = "wss://gateway.discord.gg/?v=10&encoding=json";
 
@@ -15,6 +16,8 @@ export class Client {
     private auth?: string;
     private onDispatch: EventEmitter;
     private session_id?: string;
+
+    app?: Application;
 
     constructor(intents: number[]) {
         this.intents = intents.reduce((acc, cur) => acc | cur, 0);
@@ -43,6 +46,10 @@ export class Client {
 
     public set_session_id(session_id: string): void {
         this.session_id = session_id;
+    }
+
+    public set_application(app: Application): void {
+        this.app = app;
     }
 
     public login(auth: string): void {

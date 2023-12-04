@@ -1,7 +1,6 @@
 import { api } from "../client";
 import { AsyncCache } from "../cache";
 import { UserPayload } from "../gateway/payloads/user";
-import { Snowflake } from "../gateway/snowflake";
 
 class UserCacheClass extends AsyncCache<User> {
     async create(key: string): Promise<User> {
@@ -15,7 +14,7 @@ class UserCacheClass extends AsyncCache<User> {
 export const UserCache = new UserCacheClass();
 
 export class User {
-    id: Snowflake;
+    id: string;
     username: string;
     discriminator: string;
     global_name: string;
@@ -34,7 +33,7 @@ export class User {
     avatar_decoration: string;
 
     constructor(payload: UserPayload) {
-        this.id = new Snowflake(payload.id);
+        this.id = payload.id;
         this.username = payload.username;
         this.discriminator = payload.discriminator;
         this.global_name = payload.global_name;
